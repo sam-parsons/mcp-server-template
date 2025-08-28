@@ -8,16 +8,16 @@ from starlette.responses import HTMLResponse, JSONResponse, RedirectResponse
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware import Middleware
 
-from src import setup_nhl_tools
+from src import setup_mcp_tools
 
 # Suppress websockets deprecation warnings
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="websockets")
 warnings.filterwarnings("ignore", category=DeprecationWarning, module="uvicorn.protocols.websockets")
 
-mcp = FastMCP("NHL API MCP Server")
+mcp = FastMCP("MCP Server Template")
 
-# Register tool stubs (no tools yet)
-setup_nhl_tools(mcp)
+# Register the example tool
+setup_mcp_tools(mcp)
 
 @mcp.custom_route("/", methods=["GET"])
 async def root(request):
@@ -34,11 +34,11 @@ async def mcp_info(request):
         {
             "status": "running",
             "protocol": "mcp",
-            "server_name": "NHL API MCP Server",
-            "description": "Scaffold for NHL Model Context Protocol server",
+            "server_name": "MCP Server Template",
+            "description": "Template for building custom Model Context Protocol servers",
             "mcp_endpoint": "/mcp",
             "tools_available": len(tools_list),
-            "note": "This is an MCP server scaffold. Tools will be added later.",
+            "note": "This is an MCP server template. Customize the tools in src/tools.py",
         }
     )
 
@@ -63,7 +63,7 @@ async def docs(request):
     <!DOCTYPE html>
     <html>
     <head>
-        <title>NHL API MCP Server Documentation</title>
+        <title>MCP Server Template Documentation</title>
         <style>
             body {{ font-family: Arial, sans-serif; margin: 40px; }}
             .endpoint {{ margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }}
@@ -74,8 +74,8 @@ async def docs(request):
         </style>
     </head>
     <body>
-        <h1>NHL API MCP Server Documentation</h1>
-        <p>Scaffold for a Model Context Protocol server for NHL data.</p>
+        <h1>MCP Server Template Documentation</h1>
+        <p>Template for building custom Model Context Protocol servers.</p>
 
         <h2>Available Endpoints</h2>
         <div class="endpoint"><span class="method">GET</span> <span class="path">/health</span><p>Health check</p></div>
@@ -92,14 +92,20 @@ async def docs(request):
     docs_html += """
         </div>
         <h2>Usage</h2>
-        <p>This server implements the Model Context Protocol (MCP). Tools will be added later.</p>
+        <p>This server implements the Model Context Protocol (MCP). Customize the tools in src/tools.py to build your own MCP server.</p>
+        
+        <h2>Getting Started</h2>
+        <p>1. Edit src/tools.py to add your own tools</p>
+        <p>2. Update the server name and description in main.py</p>
+        <p>3. Run with: python main.py --http</p>
+        <p>4. Test with: pytest</p>
     </body>
     </html>
     """
     return HTMLResponse(content=docs_html)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="NHL API MCP Server")
+    parser = argparse.ArgumentParser(description="MCP Server Template")
     parser.add_argument("--http", action="store_true", help="Run server with HTTP transport (default: stdio)")
     parser.add_argument("--port", "-p", type=int, default=8000, help="Port to run the server on (env PORT overrides)")
     args = parser.parse_args()

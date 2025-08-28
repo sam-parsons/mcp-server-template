@@ -3,15 +3,14 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "nhl-api-mcp"
+name = "mcp-server-template"
 version = "0.1.0"
-description = "NHL API MCP Server - Model Context Protocol server scaffold for NHL data"
+description = "MCP Server Template - Model Context Protocol server scaffold for building custom MCP servers"
 requires-python = ">=3.10"
 dependencies = [
     "fastmcp>=2.10.6",
     "fastapi>=0.115.12",
     "uvicorn[standard]>=0.24.0",
-    "nhl-api-py>=3.0.2",
 ]
 
 [project.optional-dependencies]
@@ -25,7 +24,6 @@ test = [
     "pytest-asyncio>=0.21.0",
     "pytest-cov>=4.1.0",
     "coverage>=7.3.0",
-    "nhl-api-py>=3.0.2",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -57,7 +55,7 @@ select = [
 ignore = []
 
 [tool.ruff.lint.isort]
-known-first-party = ["nhl_api_mcp"]
+known-first-party = ["mcp_server_template"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]
@@ -66,7 +64,7 @@ known-first-party = ["nhl_api_mcp"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-# Keep coverage wired like MLB, but with threshold 0 until tests exist.
+# Keep coverage wired but with threshold 0 until tests exist.
 # Raise to 80 later.
 filterwarnings = [
     "ignore::DeprecationWarning:websockets.*",
@@ -74,7 +72,7 @@ filterwarnings = [
 ]
 
 [tool.coverage.run]
-source = ["nhl_api.py", "generic_api.py"]
+source = ["src"]
 omit = [
     "*/tests/*",
     "*/test_*",

@@ -14,8 +14,8 @@ clean:
 
 # Build Docker image locally
 docker-build:
-	docker build -t nhl-api-mcp .
+	docker build -t mcp-server-template .
 
 # Run Docker container on port 8000
 docker-run:
-	docker run -d -p 8000:8000 --name nhl-api-mcp nhl-api-mcp
+	docker run -d -p 8000:8000 --name mcp-server-template mcp-server-template
