@@ -104,7 +104,7 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKERHUB_USERNAME }}/nhl-api-mcp:latest
-          ${{ secrets.DOCKERHUB_USERNAME }}/nhl-api-mcp:${{ github.sha }}
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/${{ github.event.repository.name }}:${{ github.sha }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
